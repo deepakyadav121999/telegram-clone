@@ -9,11 +9,11 @@ const MainContent = () => {
   let response = await data.json()
    let finaldata = response.data
    finaldata && setApiData(finaldata.data)
-   apidata && console.log(apidata)
+
 
     }
   
-
+    console.log(apidata)
     useEffect(()=>{
  apiCall()
 
@@ -51,7 +51,7 @@ const MainContent = () => {
                        </div>
                     
                     <div className='flex items-center justify-between w-full'>
-                    <p className='text-gray-500'>Front End Developer</p>
+                    <p className='text-gray-500'>Unread messages</p>
                      
                     <p className=' text-sm text-white  bg-gray-600   p-1 rounded-3xl text-center'>{item.
 msg_count
