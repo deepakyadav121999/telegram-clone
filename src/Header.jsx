@@ -12,7 +12,7 @@ import { LuBookmark } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiCircleQuestion } from "react-icons/ci";
 import { VscArrowSmallLeft } from "react-icons/vsc";
-import './index.css'; // Make sure to create and import this CSS file
+import './index.css'; 
 
 const Header = () => {
     const [sidebar, setSidebar] = useState(false);
