@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSpring, animated } from '@react-spring/web';
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { IoMdSearch } from "react-icons/io";
 import { WiSolarEclipse } from "react-icons/wi";
@@ -12,12 +13,13 @@ import { LuBookmark } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiCircleQuestion } from "react-icons/ci";
 import { VscArrowSmallLeft } from "react-icons/vsc";
-import './Header.css'; // Make sure to create and import this CSS file
+import './index.css'; 
 
 const Header = () => {
     const [sidebar, setSidebar] = useState(false);
-    const [animateSidebar, setAnimateSidebar] = useState(false);
     const [senderInfo, setSenderInfo] = useState({ name: '', phone: '' });
+    const [startX, setStartX] = useState(0);
+    const [currentX, setCurrentX] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,13 +40,21 @@ const Header = () => {
         fetchData();
     }, []);
 
-    const toggleSidebar = () => {
-        if (sidebar) {
-            setAnimateSidebar(false);
-            setTimeout(() => setSidebar(false), 300); // Timeout to match animation duration
-        } else {
-            setSidebar(true);
-            setTimeout(() => setAnimateSidebar(true), 0);
+    const sidebarAnimation = useSpring({
+        transform: sidebar ? 'translateX(0%)' : 'translateX(-100%)',
+    });
+
+    const handleTouchStart = (e) => {
+        setStartX(e.touches[0].clientX);
+    };
+
+    const handleTouchMove = (e) => {
+        setCurrentX(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (startX - currentX > 50) {
+            setSidebar(false);
         }
     };
 
@@ -53,8 +63,14 @@ const Header = () => {
             <div className='flex justify-between p-3 bg-gray-900 text-white relative'>
                 <div>
                     {sidebar ? (
-                        <div className={`bg-gray-800 w-4/5 h-screen flex flex-col gap-1 absolute top-0 left-0 ${animateSidebar ? 'animate-slide-in' : 'animate-slide-out'}`}>
-                            <div className='flex justify-end p-1 h-5 items-center' onClick={toggleSidebar}>
+                        <animated.div
+                            className='bg-gray-800 w-4/5 h-screen flex flex-col gap-1 absolute top-0 left-0'
+                            style={sidebarAnimation}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        >
+                            <div className='flex justify-end p-1 h-5 items-center' onClick={() => setSidebar(false)}>
                                 <VscArrowSmallLeft size={40} />
                             </div>
                             <div className='flex flex-col bg-gray-700 p-5'>
@@ -107,9 +123,9 @@ const Header = () => {
                                     <p className='text-gray-300'>Telegram Features</p>
                                 </div>
                             </div>
-                        </div>
+                        </animated.div>
                     ) : (
-                        <div onClick={toggleSidebar}>
+                        <div onClick={() => setSidebar(true)}>
                             <HiOutlineBars3 size={25} />
                         </div>
                     )}
