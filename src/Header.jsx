@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSpring, animated } from '@react-spring/web';
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { IoMdSearch } from "react-icons/io";
 import { WiSolarEclipse } from "react-icons/wi";
@@ -13,13 +12,24 @@ import { LuBookmark } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { CiCircleQuestion } from "react-icons/ci";
 import { VscArrowSmallLeft } from "react-icons/vsc";
-import './index.css'; 
+import './index.css'; // Make sure to create and import this CSS file
 
 const Header = () => {
     const [sidebar, setSidebar] = useState(false);
+    const [animateSidebar, setAnimateSidebar] = useState(false);
     const [senderInfo, setSenderInfo] = useState({ name: '', phone: '' });
-    const [startX, setStartX] = useState(0);
-    const [currentX, setCurrentX] = useState(0);
+
+    let startX = 0;
+
+    const handleTouchStart = (e) => {
+        startX = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        if (sidebar && e.touches[0].clientX - startX < -100) {
+            toggleSidebar();
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,21 +50,13 @@ const Header = () => {
         fetchData();
     }, []);
 
-    const sidebarAnimation = useSpring({
-        transform: sidebar ? 'translateX(0%)' : 'translateX(-100%)',
-    });
-
-    const handleTouchStart = (e) => {
-        setStartX(e.touches[0].clientX);
-    };
-
-    const handleTouchMove = (e) => {
-        setCurrentX(e.touches[0].clientX);
-    };
-
-    const handleTouchEnd = () => {
-        if (startX - currentX > 50) {
-            setSidebar(false);
+    const toggleSidebar = () => {
+        if (sidebar) {
+            setAnimateSidebar(false);
+            setTimeout(() => setSidebar(false), 300); // Timeout to match animation duration
+        } else {
+            setSidebar(true);
+            setTimeout(() => setAnimateSidebar(true), 0);
         }
     };
 
@@ -63,14 +65,12 @@ const Header = () => {
             <div className='flex justify-between p-3 bg-gray-900 text-white relative'>
                 <div>
                     {sidebar ? (
-                        <animated.div
-                            className='bg-gray-800 w-4/5 h-screen flex flex-col gap-1 absolute top-0 left-0'
-                            style={sidebarAnimation}
+                        <div
+                            className={`bg-gray-800 w-4/5 h-screen flex flex-col gap-1 absolute top-0 left-0 ${animateSidebar ? 'animate-slide-in' : 'animate-slide-out'}`}
                             onTouchStart={handleTouchStart}
                             onTouchMove={handleTouchMove}
-                            onTouchEnd={handleTouchEnd}
                         >
-                            <div className='flex justify-end p-1 h-5 items-center' onClick={() => setSidebar(false)}>
+                            <div className=' justify-end p-1 h-5 items-center hidden md:flex  ' onClick={toggleSidebar}>
                                 <VscArrowSmallLeft size={40} />
                             </div>
                             <div className='flex flex-col bg-gray-700 p-5'>
@@ -123,9 +123,9 @@ const Header = () => {
                                     <p className='text-gray-300'>Telegram Features</p>
                                 </div>
                             </div>
-                        </animated.div>
+                        </div>
                     ) : (
-                        <div onClick={() => setSidebar(true)}>
+                        <div onClick={toggleSidebar} className='  '>
                             <HiOutlineBars3 size={25} />
                         </div>
                     )}
