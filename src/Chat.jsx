@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { CiFaceSmile } from "react-icons/ci";
 import { PiLinkSimple } from "react-icons/pi";
 import { IoMdSend } from "react-icons/io";
+import { useTheme } from './ThemeContext';
 
 const Chat = ({ messages }) => {
+  const { theme } = useTheme();
   const [newMessage, setNewMessage] = useState("");
   const lastMessageRef = useRef(null);
 
@@ -58,7 +60,7 @@ const Chat = ({ messages }) => {
           </div>
         ))}
       </div>
-      <div className="mt-4 sticky bottom-0 p-4  flex justify-around bg-slate-700">
+      <div className={`mt-4 sticky bottom-0 p-4  flex justify-around bg-slate-700 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}>
         <div className=" flex   items-center">
           <CiFaceSmile size={30} />
         </div>
@@ -68,7 +70,7 @@ const Chat = ({ messages }) => {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className=" p-2  rounded mb-2 w-full outline-none bg-slate-700"
+            className={` p-2  rounded mb-2 w-full outline-none bg-slate-700 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}
             placeholder="Type your message..."
           />
         </div>

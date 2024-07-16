@@ -5,7 +5,10 @@ import { IoMdCall } from "react-icons/io";
 import { SlOptionsVertical } from "react-icons/sl";;
 import { Link } from 'react-router-dom';
 import Chat from './Chat';
+
+import { useTheme } from './ThemeContext';
 const ChatDetails = () => {
+    const { theme } = useTheme();
    const[apidata, setApiData] = useState([])
     let { userId } = useParams();
     console.log(userId)
@@ -25,10 +28,10 @@ const ChatDetails = () => {
     },[])
 
   return (
-    <div className='text-white'>
-        <div className="navbar flex justify-between items-center p-5  sticky top-0 bg-gray-900">
-           <Link to={'/'}><div className='w-1/6'>
-                <HiArrowLeft color='white' size={25}/>
+    <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'} h-screen`}>
+        <div className= {`navbar flex justify-between items-center p-5 fixed w-full top-0 bg-gray-900  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+           <Link to={'/'}><div className={`w-1/6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+                <HiArrowLeft  size={25}/>
             </div></Link> 
 
             <div className='flex gap-2 items-center w-3/6'>
@@ -42,14 +45,14 @@ const ChatDetails = () => {
 
 
             <div className='w-1/6 flex justify-end'>
-                <IoMdCall color='white' size={25}/>
+                <IoMdCall  size={25}/>
             </div>
             <div className='w-1/6 flex justify-end'>
-                <SlOptionsVertical color='white' size={25}/>
+                <SlOptionsVertical  size={25}/>
             </div>
         </div>
 
-        <div className="chat_display bg-gray-700 h-max flex flex-col justify-between p-5">
+        <div className={` mt-20 chat_display bg-gray-700 h-max flex flex-col justify-between p-5 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
           
         <Chat messages={apidata}/>
 
