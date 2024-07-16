@@ -21,7 +21,7 @@ const Chat = ({ messages }) => {
   }, [messages]);
 
   return (
-    <div className="p-4 max-w-full h-full flex flex-col justify-between">
+    <div className="p-4 max-w-full h-full flex flex-col justify-between ">
       <div className="space-y-4 overflow-y-auto flex-grow">
         {messages.map((message, index) => (
           <div
