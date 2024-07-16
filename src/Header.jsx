@@ -74,7 +74,7 @@ const Header = () => {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
             >
-              <div className="justify-end p-1 h-5 items-center hidden md:flex" onClick={toggleSidebar}>
+              <div className="justify-end p-1 h-5 items-center hidden xl:flex" onClick={toggleSidebar}>
                 <VscArrowSmallLeft size={40} />
               </div>
               <div className="flex flex-col p-5">
