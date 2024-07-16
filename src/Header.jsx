@@ -72,7 +72,7 @@ const Header = () => {
                 theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'
               }`}
               onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
+              onTouchMove={handleTouchMove} 
             >
               <div className="justify-end p-1 h-5 items-center hidden xl:flex" onClick={toggleSidebar}>
                 <VscArrowSmallLeft size={40} />

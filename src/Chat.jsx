@@ -19,7 +19,7 @@ const Chat = ({ messages }) => {
       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-
+ 
   return (
     <div className="p-4 max-w-full h-full flex flex-col justify-between ">
       <div className="space-y-4 overflow-y-auto flex-grow">
@@ -60,7 +60,7 @@ const Chat = ({ messages }) => {
           </div>
         ))}
       </div>
-      <div className={`mt-4 sticky bottom-0 p-4  flex justify-around bg-slate-700 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}>
+      <div className={`mt-4 sticky bottom-0 p-4  flex justify-around  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}>
         <div className=" flex   items-center">
           <CiFaceSmile size={30} />
         </div>
@@ -70,7 +70,7 @@ const Chat = ({ messages }) => {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            className={` p-2  rounded mb-2 w-full outline-none bg-slate-700 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}
+            className={` p-2  rounded mb-2 w-full outline-none  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-300 text-black'}`}
             placeholder="Type your message..."
           />
         </div>

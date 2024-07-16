@@ -40,7 +40,7 @@ const MainContent = () => {
         { apidata && apidata.map((item,index)=>{
             return(
               <Link to={`/${item.id}`}>
-                <div className={`flex  bg-gray-800  p-1 gap-2 w-full items-center md:p-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'}`} key={index}>
+                <div className={`flex    p-1 gap-2 w-full items-center md:p-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'}`} key={index}>
                 <div className='flex justify-center items-center  '>
                  <img src="https://shorturl.at/3mdSP" alt=""  className='rounded-3xl h-12 w-12'/>
                    </div>
@@ -71,7 +71,7 @@ msg_count
         
       
 
-       
+        
 
        
 
